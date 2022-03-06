@@ -3,11 +3,14 @@ import 'package:flutter_use_hive/pages/home_page.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 
+import 'TypeAdapter/user.dart';
+
 late Box box;
 
 Future<void> main() async {
   await Hive.initFlutter();
   box = await Hive.openBox('box');
+  Hive.registerAdapter(UserAdapter());
   runApp(const MyApp());
 }
 
