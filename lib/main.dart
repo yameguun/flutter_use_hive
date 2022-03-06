@@ -7,11 +7,16 @@ import 'TypeAdapter/user.dart';
 
 late Box box;
 
-Future<void> main() async {
+void main() async {
   await Hive.initFlutter();
+
+  Hive.registerAdapter<User>(UserAdapter());
+
   box = await Hive.openBox('box');
-  Hive.registerAdapter(UserAdapter());
-  runApp(const MyApp());
+
+  box.put('user', User(name: 'Seiji', age: 39));
+
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -35,7 +40,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const HomePage(),
+      home: HomePage(box),
     );
   }
 }
